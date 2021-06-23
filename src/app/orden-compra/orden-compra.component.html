@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Sistema de Orden de Compras</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Actividad sumativa unidad 2</h6>
+      <p class="card-text">
+        Lista, agrega, actualiza y elimina productos de la orden de compra
+        instantaneamente.
+      </p>
+    </div>
+  </div>
+  <hr />
+
+  <div class="row">
+    <!-- Formulario ingreso de producto -->
+    <div class="col-sm-4 inputs">
+      <form
+        class="form-control"
+        [formGroup]="formularioProducto"
+        (ngSubmit)="Agregar()"
+      >
+        <div class="input-group mb-3">
+          <p>
+            Código:<input
+              class="form-control"
+              type="text"
+              formControlName="codigo"
+              [(ngModel)]="codigo"
+            />
+          </p>
+        </div>
+        <div class="input-group mb-3">
+          <p>
+            Nombre:<input
+              class="form-control"
+              type="text"
+              formControlName="nombre"
+              [(ngModel)]="nombre"
+            />
+          </p>
+        </div>
+        <div class="input-group mb-3">
+          <p>
+            Precio:<input
+              class="form-control"
+              type="number"
+              formControlName="precio"
+              [(ngModel)]="precio"
+            />
+          </p>
+        </div>
+        <div class="input-group mb-3">
+          <p>
+            Cantidad:<input
+              class="form-control"
+              type="number"
+              formControlName="cantidad"
+              [(ngModel)]="cantidad"
+            />
+          </p>
+        </div>
+        <div class="input-group mb-3">
+          <p>
+            Descripcion:<input
+              class="form-control"
+              type="text"
+              formControlName="descripcion"
+              [(ngModel)]="descripcion"
+            />
+          </p>
+        </div>
+        <div>
+          <button class="btn btn-success" type="submit">Agregar</button>
+          <button class="btn btn-warning" type="reset">Limpiar</button>
+        </div>
+      </form>
+    </div>
+    <br />
+    <!-- Formulario ingreso de producto -->
+    <div class="col-sm-8 tables">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Acción</th>
+          </tr>
+          <tr *ngFor="let product of products; index as i" [attr.data-index] ="i" class="table-light">
+              <td>{{ product.codigo }}</td>
+              <td>{{ product.nombre }}</td>
+              <td>{{ product.precio }}</td>
+              <td>{{ product.cantidad }}</td>
+              <td>{{ product.descripcion }}</td>
+              <td><button (click)="borrar()">X</button> <button (click)="editar(i)">Actualizar</button></td>
+          </tr>
+          <tr>
+            <td>{{ codigo }}</td>
+            <td>{{ nombre }}</td>
+            <td>{{ precio }}</td>
+            <td>{{ cantidad }}</td>
+            <td>{{ descripcion }}</td>
+            <th></th>
+          </tr>
+        </thead>
+      </table>
+      <div class="col-sm-12">
+        <div class="card">
+          <tr>
+            <td>Total de compra: ${{ totalIva }} (IVA Incl)</td>
+          </tr>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+  </div>
+  <hr />
+</div>
