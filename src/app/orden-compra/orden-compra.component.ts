@@ -14,6 +14,7 @@ export class OrdenCompraComponent {
   update!: number
   subTotal: number = 0
   totalIva: number = 0
+  iva: number = 0
   valor!: number
   cant!: number
 
@@ -34,21 +35,28 @@ export class OrdenCompraComponent {
 
   public Agregar() {
 
-    this.products.push({
-      codigo: this.formularioProducto.value.codigo,
-      nombre: this.formularioProducto.value.nombre,
-      precio: this.formularioProducto.value.precio,
-      cantidad: this.formularioProducto.value.cantidad,
-      descripcion: this.formularioProducto.value.descripcion
+    if (this.updating){
+      this.products[this.update] = {
+        codigo: this.formularioProducto.value.codigo,
+        nombre:  this.formularioProducto.value.nombre,
+        precio: this.formularioProducto.value.precio,
+        cantidad: this.formularioProducto.value.cantidad,
+        descripcion: this.formularioProducto.value.descripcion
+      };
+    } else {
+      this.products.push({
+        codigo: this.formularioProducto.value.codigo,
+        nombre: this.formularioProducto.value.nombre,
+        precio: this.formularioProducto.value.precio,
+        cantidad: this.formularioProducto.value.cantidad,
+        descripcion: this.formularioProducto.value.descripcion
 
-    });
-
-    this.valor=parseInt(this.formularioProducto.value.precio)
-    this.cant=parseInt(this.formularioProducto.value.cantidad)
-
-    this.totalIva= this.totalIva + (this.valor*this.cant*1.19)
-    console.log("Total Iva: "+ this.totalIva);
-    console.log(this.products);
+      });
+      this.cant=parseInt(this.cantidad)
+    }
+    this.updating = false
+    this.clean()
+    this.calcularTotal()
   }
 
   public borrar() {
@@ -68,35 +76,18 @@ export class OrdenCompraComponent {
     this.formularioProducto.setValue({codigo: null, nombre: null, precio: null, cantidad: null, descripcion: null})
   }
 
-  public actualizar() {
-
-    if (this.updating){
-      this.products[this.update] = {
-        codigo: this.formularioProducto.value.codigo,
-        nombre:  this.formularioProducto.value.nombre,
-        precio: this.formularioProducto.value.precio,
-        cantidad: this.formularioProducto.value.cantidad,
-        descripcion: this.formularioProducto.value.descripcion
-      };
-    } else {
-      this.products.push({
-        codigo: this.formularioProducto.value.codigo,
-        nombre: this.formularioProducto.value.nombre,
-        precio: this.formularioProducto.value.precio,
-        cantidad: this.formularioProducto.value.cantidad,
-        descripcion: this.formularioProducto.value.descripcion
-
-      });
-    }
-    this.clean()
-    this.updating = false
-    console.log(this.products);
-  }
-
-  public editar(index:number){
+  public edit(index:number){
     this.formularioProducto.setValue(this.products[index])
     this.updating = true
     this.update = index
+  }
+
+  public calcularTotal(){
+    this.products.forEach((sum:any) => {
+      this.subTotal = this.subTotal + (sum.precio*this.cant);
+      this.iva = this.subTotal*0.19;
+      this.totalIva = this.subTotal + this.iva;
+    });
   }
 
 }

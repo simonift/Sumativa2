@@ -94,7 +94,7 @@
               <td>{{ product.precio }}</td>
               <td>{{ product.cantidad }}</td>
               <td>{{ product.descripcion }}</td>
-              <td><button (click)="borrar()">X</button> <button (click)="editar(i)">Actualizar</button></td>
+              <td><button (click)="borrar()">Eliminar</button><button (click)="edit(i)">Actualizar</button></td>
           </tr>
           <tr>
             <td>{{ codigo }}</td>
@@ -106,10 +106,16 @@
           </tr>
         </thead>
       </table>
-      <div class="col-sm-12">
+      <div class="col-sm-12" text-align="left">
         <div class="card">
           <tr>
-            <td>Total de compra: ${{ totalIva }} (IVA Incl)</td>
+            <td>Sub Total: ${{ subTotal }}</td>
+          </tr>
+          <tr>
+            <td>Iva 19%: ${{ iva }}</td>
+          </tr>
+          <tr>
+            <td>Total Compra: ${{ totalIva }} (IVA Incl)</td>
           </tr>
         </div>
       </div>
